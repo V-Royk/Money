@@ -1,0 +1,52 @@
+<!-- {% load tailwind_tags %} -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <!-- {% tailwind_css %} -->
+    <title>Главная страница</title>
+</head>
+<body>
+    <header>
+        <h1 class="header">Главная</h1>
+    </header>
+    <main class="">
+        <div class="transactions">
+            {% for transaction in transactions %}
+            <div class="transaction">
+                <div class="">{{transaction.title}}</div>
+                {% if transaction.type %}
+                    <p class="">+{{transaction.total}}</p>
+                {% else %}
+                    <p class="">-{{transaction.total}}</p>
+                {% endif %}
+              </div>
+            {% endfor %}
+        </div>
+        <div class="spendings">
+            <canvas id="spendings-chart"></canvas>        
+        </div>
+        </div>
+        <div class="incomes">
+            <canvas id="income-chart"></canvas>        
+        </div> 
+    </main>
+    <div class="add">+</div>
+    <div class="modal-wrapper">
+        <form action="/add_transaction/" method="POST" class="modal">
+            {% csrf_token %}
+            <div class="close">
+                X
+            </div>
+            {{form}}
+            <button>Добавить</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
